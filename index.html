@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <title>Shopping Cart</title>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" />
+   <link href="style.css" rel="stylesheet">
+</head>
+
+<body>
+
+   <section>
+      <div class="container">
+         <div class="cart">
+            <div class="col-md-12 col-lg-10 mx-auto">
+               <div class="cart-item">
+                  <div class="row">
+                     <div class="col-md-7 center-item">
+                        <img src="images/product-1.png" alt="">
+                        <h5>iPhone 11 128GB Black</h5>
+                     </div>
+
+                     <div class="col-md-5 center-item">
+                        <div class="input-group number-spinner">
+                           <button id="decreaseMobile" class="btn btn-default"><i class="fas fa-minus"></i></button>
+                           <input id="countMobile" type="text" class="form-control text-center" value="1">
+                           <button id="increaseMobile" class="btn btn-default"><i class="fas fa-plus"></i></button>
+                        </div>
+                        <h5>$<span id="currentMobileAmount">1219</span></h5>
+                        <img src="images/remove.png" alt="" class="remove-item">
+                     </div>
+                  </div>
+               </div>
+
+               <div class="cart-item">
+                  <div class="row">
+                     <div class="col-md-7 center-item mx-auto">
+                        <img src="images/product-2.png" alt="">
+                        <h5>iPhone 11 Silicone Case - Black</h5>
+                     </div>
+                     <div class="col-md-5 center-item">
+                        <div class="input-group number-spinner">
+                           <button id="decreaseCase" class="btn btn-default"><i class="fas fa-minus"></i></button>
+                           <input id="countCase" type="text" class="form-control text-center" value="1">
+                           <button id="increaseCase" class="btn btn-default"><i class="fas fa-plus"></i></button>
+
+                        </div>
+                        <h5>$<span id="currentCaseAmount">59</span></h5>
+                        <img src="images/remove.png" alt="" class="remove-item">
+                     </div>
+                  </div>
+               </div>
+
+               <div class="cart-item">
+                  <div class="row">
+
+                     <div class="col-md-8">
+                        <h5>Subtotal: </h5>
+                        <h5>Tax:</h5>
+                        <h5>Total:</h5>
+                     </div>
+
+                     <div class="col-md-4 status">
+                        <h5>$<span id="subTotal">1278</span></h5>
+                        <h5>$<span id="tax">10</span></h5>
+                        <h5>$<span id="total">1278</span></h5>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-md-12 pt-4 pb-4">
+                  <button type="button" class="btn btn-success check-out">Check Out</button>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+   <script>
+
+      //increaseMobile
+      const increaseMobile=document.getElementById("increaseMobile");
+      increaseMobile.addEventListener("click",function(){
+         const count=GetCount("countMobile")+1;
+            document.getElementById("countMobile").value=count;
+            const amount=1219;
+            UpdateAmount("currentMobileAmount",amount);
+            UpdateAmount("subTotal",amount);
+            UpdateAmount("total",amount);    
+      });
+
+
+      //decreaseMobile
+      const decreaseMobile=document.getElementById("decreaseMobile");
+      decreaseMobile.addEventListener("click",function(){
+         const count=GetCount("countMobile")-1;
+         if(count<0){
+
+         }
+         else{
+            document.getElementById("countMobile").value=count;
+            const amount=1219;
+            UpdateAmount("currentMobileAmount",-1*amount);
+            UpdateAmount("subTotal",-1*amount);
+            UpdateAmount("total",-1*amount);
+         }
+         
+      });
+
+
+      //increaseCase
+      const increaseCase=document.getElementById("increaseCase");
+      increaseCase.addEventListener("click",function(){
+         const count=GetCount("countCase")+1;
+         document.getElementById("countCase").value=count;
+         const amount=59;
+         UpdateAmount("currentCaseAmount",amount);
+         UpdateAmount("subTotal",amount);
+         UpdateAmount("total",amount);
+      });
+
+
+      //decreaseCase
+      const decreaseCase=document.getElementById("decreaseCase");
+      decreaseCase.addEventListener("click",function(){
+         const count=GetCount("countCase")-1;
+         if(count<0){
+
+         }
+         else{
+            document.getElementById("countCase").value=count;
+            const amount=59;
+            UpdateAmount("currentCaseAmount",-1*amount);
+            UpdateAmount("subTotal",-1*amount);
+            UpdateAmount("total",-1*amount);
+         }  
+      });
+
+
+      function GetCount(id){
+         const count=document.getElementById(id).value;
+         const countNumber=parseFloat(count);
+         return countNumber;
+      }
+      function UpdateAmount(id,amount){
+         const currentAmount=document.getElementById(id).innerText;
+         const currentAmountNumber=parseFloat(currentAmount)+amount;
+         if(id==="subTotal" || id==="total"){
+            const mobileAmount=parseFloat(document.getElementById("currentMobileAmount").innerText);
+            const caseAmount=parseFloat(document.getElementById("currentCaseAmount").innerText);
+            const total=mobileAmount+caseAmount;
+            const tax=document.getElementById("tax").innerText;
+            const taxAmount=parseFloat(tax);
+            const totalAmount=(taxAmount*total)/100;
+            const totalAmountNumber=total+totalAmount;
+            document.getElementById(id).innerText=totalAmountNumber;
+         }
+         else{
+            document.getElementById(id).innerText=currentAmountNumber;
+         }
+      }
+   </script>
+</body>
+
+</html>
